@@ -4,13 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.raulespim.bankingaccounts.core.navigation.Route
+import com.raulespim.bankingaccounts.features.accountdetails.presentation.AccountDetailsScreen
+import com.raulespim.bankingaccounts.features.accounts.presentation.AccountsScreen
 import com.raulespim.bankingaccounts.ui.theme.BankingAccountsTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,28 +25,33 @@ class MainActivity : ComponentActivity() {
         setContent {
             BankingAccountsTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    val navController = rememberNavController()
+
+                    NavHost(
+                        navController = navController,
+                        startDestination = Route.AccountsScreen,
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .consumeWindowInsets(innerPadding)
+                    ) {
+                        composable<Route.AccountsScreen> {
+                            AccountsScreen(
+                                onClick = {
+                                    navController.navigate(Route.AccountDetailsScreen)
+                                }
+                            )
+                        }
+                        composable<Route.AccountDetailsScreen> {
+                            AccountDetailsScreen(
+                                onNavigateBack = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BankingAccountsTheme {
-        Greeting("Android")
-    }
-}
