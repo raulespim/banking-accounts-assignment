@@ -1,4 +1,4 @@
-package com.raulespim.bankingaccounts.features.accountdetails.presentation
+package com.raulespim.bankingaccounts.features.accounts.presentation.details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

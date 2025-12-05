@@ -1,4 +1,4 @@
-package com.raulespim.bankingaccounts.features.accounts.presentation.components
+package com.raulespim.bankingaccounts.features.accounts.presentation.list.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

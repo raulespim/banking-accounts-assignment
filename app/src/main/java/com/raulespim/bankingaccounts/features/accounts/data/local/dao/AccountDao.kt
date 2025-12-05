@@ -1,9 +1,10 @@
-package com.raulespim.bankingaccounts.features.accounts.data.local
+package com.raulespim.bankingaccounts.features.accounts.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Upsert
+import com.raulespim.bankingaccounts.features.accounts.data.local.AccountEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

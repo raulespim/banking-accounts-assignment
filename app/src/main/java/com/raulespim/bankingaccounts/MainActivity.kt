@@ -14,8 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.raulespim.bankingaccounts.core.navigation.Route
-import com.raulespim.bankingaccounts.features.accountdetails.presentation.AccountDetailsScreen
-import com.raulespim.bankingaccounts.features.accounts.presentation.AccountsScreen
+import com.raulespim.bankingaccounts.features.accounts.presentation.details.AccountDetailsScreen
+import com.raulespim.bankingaccounts.features.accounts.presentation.list.AccountsScreen
 import com.raulespim.bankingaccounts.ui.theme.BankingAccountsTheme
 import dagger.hilt.android.AndroidEntryPoint
 

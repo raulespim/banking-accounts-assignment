@@ -2,7 +2,7 @@ package com.raulespim.bankingaccounts.core.common
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.raulespim.bankingaccounts.features.accounts.data.local.AccountDao
+import com.raulespim.bankingaccounts.features.accounts.data.local.dao.AccountDao
 import com.raulespim.bankingaccounts.features.accounts.data.local.AccountEntity
 
 @Database(

@@ -1,4 +1,4 @@
-package com.raulespim.bankingaccounts.features.accounts.data.remote
+package com.raulespim.bankingaccounts.features.accounts.data.remote.dto
 
 import kotlinx.serialization.Serializable
 

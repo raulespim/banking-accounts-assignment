@@ -1,6 +1,6 @@
 package com.raulespim.bankingaccounts.features.accounts.data.repository
 
-import com.raulespim.bankingaccounts.features.accounts.data.local.AccountDao
+import com.raulespim.bankingaccounts.features.accounts.data.local.dao.AccountDao
 import com.raulespim.bankingaccounts.features.accounts.data.mappers.toAccount
 import com.raulespim.bankingaccounts.features.accounts.data.mappers.toAccountEntity
 import com.raulespim.bankingaccounts.features.accounts.data.remote.AccountApi

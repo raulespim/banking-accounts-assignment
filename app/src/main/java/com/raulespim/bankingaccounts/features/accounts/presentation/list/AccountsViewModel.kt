@@ -1,9 +1,8 @@
-package com.raulespim.bankingaccounts.features.accounts.presentation
+package com.raulespim.bankingaccounts.features.accounts.presentation.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raulespim.bankingaccounts.features.accounts.domain.Account
-import com.raulespim.bankingaccounts.features.accounts.domain.repository.AccountRepository
 import com.raulespim.bankingaccounts.features.accounts.domain.usecase.GetAccountsUseCase
 import com.raulespim.bankingaccounts.features.accounts.domain.usecase.RefreshAccountsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

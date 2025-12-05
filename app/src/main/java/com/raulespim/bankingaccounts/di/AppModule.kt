@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.raulespim.bankingaccounts.BuildConfig
 import com.raulespim.bankingaccounts.core.common.BankingAccountsDatabase
-import com.raulespim.bankingaccounts.features.accounts.data.local.AccountDao
+import com.raulespim.bankingaccounts.features.accounts.data.local.dao.AccountDao
 import com.raulespim.bankingaccounts.features.accounts.data.remote.AccountApi
 import com.raulespim.bankingaccounts.features.accounts.data.repository.AccountRepositoryImpl
 import com.raulespim.bankingaccounts.features.accounts.domain.repository.AccountRepository
@@ -21,7 +21,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
