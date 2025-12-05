@@ -8,5 +8,5 @@ sealed interface Route {
     data object AccountsScreen: Route
 
     @Serializable
-    data object AccountDetailsScreen: Route
+    data class AccountDetailsScreen(val accountId: String): Route
 }

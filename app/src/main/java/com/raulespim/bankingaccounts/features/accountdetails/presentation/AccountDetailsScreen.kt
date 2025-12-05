@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 
 @Composable
 fun AccountDetailsScreen(
+    accountId: String,
     onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {

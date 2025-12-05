@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,11 +12,14 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import com.raulespim.bankingaccounts.core.navigation.Route
 import com.raulespim.bankingaccounts.features.accountdetails.presentation.AccountDetailsScreen
 import com.raulespim.bankingaccounts.features.accounts.presentation.AccountsScreen
 import com.raulespim.bankingaccounts.ui.theme.BankingAccountsTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,16 +38,16 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable<Route.AccountsScreen> {
                             AccountsScreen(
-                                onClick = {
-                                    navController.navigate(Route.AccountDetailsScreen)
+                                onAccountClick = { accountId ->
+                                    navController.navigate(Route.AccountDetailsScreen(accountId))
                                 }
                             )
                         }
                         composable<Route.AccountDetailsScreen> {
+                            val accountId = it.toRoute<Route.AccountDetailsScreen>().accountId
                             AccountDetailsScreen(
-                                onNavigateBack = {
-                                    navController.popBackStack()
-                                }
+                                accountId = accountId,
+                                onNavigateBack = { navController.popBackStack() }
                             )
                         }
                     }
