@@ -89,6 +89,7 @@ dependencies {
 
     // Coil Compose
     implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("io.coil-kt:coil-svg:2.4.0")
 
     // Dagger - Hilt
     implementation(libs.hilt.android)

@@ -2,7 +2,7 @@ package com.raulespim.bankingaccounts.features.accounts.presentation.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.raulespim.bankingaccounts.features.accounts.domain.Account
+import com.raulespim.bankingaccounts.features.accounts.domain.model.Account
 import com.raulespim.bankingaccounts.features.accounts.domain.usecase.GetAccountsUseCase
 import com.raulespim.bankingaccounts.features.accounts.domain.usecase.RefreshAccountsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,16 +38,28 @@ class AccountsViewModel @Inject constructor(
     private fun observeAccounts() {
         viewModelScope.launch {
             getAccountsUseCase()
-                .map { result ->
-                    result.fold(
-                        onSuccess = { AccountsUiState.Success(it) },
-                        onFailure = { AccountsUiState.Error(it.message ?: "Unknown error") }
-                    )
+                .onStart {
+                    _uiState.value = AccountsUiState.Loading
                 }
-                .onStart { emit(AccountsUiState.Loading) }
-                .catch { emit(AccountsUiState.Error("Unexpected error")) }
-                .collect { state ->
-                    _uiState.value = state
+                .catch { throwable ->
+                    _uiState.value = AccountsUiState.Error("Unexpected error")
+                }
+                .collect { result ->
+                    val accounts = result.getOrNull().orEmpty()
+
+                    _uiState.value = when {
+                        accounts.isNotEmpty() -> {
+                            AccountsUiState.Success(
+                                accounts.sortedByDescending { it.isFavorite }
+                            )
+                        }
+                        result.isFailure -> {
+                            AccountsUiState.Error("No internet connection")
+                        }
+                        else -> {
+                            AccountsUiState.Success(emptyList())
+                        }
+                    }
                 }
         }
     }

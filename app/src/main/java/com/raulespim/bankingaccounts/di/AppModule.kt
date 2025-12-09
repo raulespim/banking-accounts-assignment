@@ -9,9 +9,11 @@ import com.raulespim.bankingaccounts.features.accounts.data.local.dao.AccountDao
 import com.raulespim.bankingaccounts.features.accounts.data.remote.AccountApi
 import com.raulespim.bankingaccounts.features.accounts.data.repository.AccountRepositoryImpl
 import com.raulespim.bankingaccounts.features.accounts.domain.repository.AccountRepository
+import dagger.MapKey
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json

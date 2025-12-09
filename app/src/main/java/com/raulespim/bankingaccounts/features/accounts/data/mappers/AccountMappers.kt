@@ -2,7 +2,7 @@ package com.raulespim.bankingaccounts.features.accounts.data.mappers
 
 import com.raulespim.bankingaccounts.features.accounts.data.local.AccountEntity
 import com.raulespim.bankingaccounts.features.accounts.data.remote.dto.AccountDto
-import com.raulespim.bankingaccounts.features.accounts.domain.Account
+import com.raulespim.bankingaccounts.features.accounts.domain.model.Account
 
 fun AccountDto.toAccountEntity(): AccountEntity {
     return AccountEntity(

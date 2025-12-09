@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.raulespim.bankingaccounts.features.accounts.domain.Account
+import com.raulespim.bankingaccounts.features.accounts.domain.model.Account
 import com.raulespim.bankingaccounts.ui.theme.BankingAccountsTheme
 import java.text.NumberFormat
 import java.util.Currency
