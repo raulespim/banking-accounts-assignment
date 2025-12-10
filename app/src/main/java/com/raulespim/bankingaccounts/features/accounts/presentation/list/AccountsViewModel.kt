@@ -38,9 +38,6 @@ class AccountsViewModel @Inject constructor(
     private fun observeAccounts() {
         viewModelScope.launch {
             getAccountsUseCase()
-                .onStart {
-                    _uiState.value = AccountsUiState.Loading
-                }
                 .catch { throwable ->
                     _uiState.value = AccountsUiState.Error("Unexpected error")
                 }
@@ -76,6 +73,7 @@ class AccountsViewModel @Inject constructor(
                         exception.message ?: "Check your connection"
                     )
                 }
+
         }
     }
 }

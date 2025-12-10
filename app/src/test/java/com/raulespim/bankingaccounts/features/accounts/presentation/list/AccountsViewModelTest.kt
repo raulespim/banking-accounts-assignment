@@ -1,9 +1,7 @@
-package com.raulespim.bankingaccounts.features.accounts.presentation
+package com.raulespim.bankingaccounts.features.accounts.presentation.list
 
 import com.raulespim.bankingaccounts.features.accounts.domain.usecase.GetAccountsUseCase
 import com.raulespim.bankingaccounts.features.accounts.domain.usecase.RefreshAccountsUseCase
-import com.raulespim.bankingaccounts.features.accounts.presentation.list.AccountsUiState
-import com.raulespim.bankingaccounts.features.accounts.presentation.list.AccountsViewModel
 import com.raulespim.bankingaccounts.provide.emptyAccountList
 import com.raulespim.bankingaccounts.provide.favoriteAccountMock
 import com.raulespim.bankingaccounts.provide.regularAccountMock
@@ -13,22 +11,17 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlinx.coroutines.withTimeout
 import org.junit.After
 import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
-import java.io.IOException
 
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -52,10 +45,7 @@ class AccountsViewModelTest {
 
     @Test
     fun `init - loads accounts and puts favorites first`() = runTest {
-        val favorite = favoriteAccountMock
-        val normal = regularAccountMock
-
-        every { getAccountsUseCase() } returns flowOf(Result.success(listOf(normal, favorite)))
+        every { getAccountsUseCase() } returns flowOf(Result.success(listOf(regularAccountMock, favoriteAccountMock)))
 
         viewModel = AccountsViewModel(getAccountsUseCase, refreshAccountsUseCase)
 

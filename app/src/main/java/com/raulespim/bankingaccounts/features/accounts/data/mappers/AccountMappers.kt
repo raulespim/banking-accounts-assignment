@@ -27,15 +27,3 @@ fun AccountEntity.toAccount(): Account {
         isFavorite = isFavorite
     )
 }
-
-fun Account.toAccountEntity(): AccountEntity {
-    return AccountEntity(
-        id = id,
-        accountNumber = accountNumber,
-        balance = balance,
-        currencyCode = currencyCode,
-        accountType = accountType,
-        accountNickname = accountNickname,
-        isFavorite = isFavorite
-    )
-}
