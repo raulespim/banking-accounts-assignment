@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 interface AccountRepository {
     fun getAccounts(): Flow<Result<List<Account>>>
     suspend fun refreshAccounts()
-    suspend fun setFavoriteAccount(accountId: String?)
     fun getFavoriteAccountOffline(): Flow<Account?>
     suspend fun toggleFavorite(accountId: String, currentFavoriteId: String?): Result<Unit>
     suspend fun getAccountDetails(accountId: String): Result<AccountDetailsDto>

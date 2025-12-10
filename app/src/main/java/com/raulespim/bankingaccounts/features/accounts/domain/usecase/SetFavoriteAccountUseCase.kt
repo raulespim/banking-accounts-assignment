@@ -6,5 +6,5 @@ import javax.inject.Inject
 class SetFavoriteAccountUseCase @Inject constructor(
     private val repository: AccountRepository
 ) {
-    suspend operator fun invoke(accountId: String?) = repository.setFavoriteAccount(accountId)
+
 }

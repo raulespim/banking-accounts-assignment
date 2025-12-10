@@ -1,0 +1,21 @@
+package com.raulespim.bankingaccounts.core.common
+
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.test.*
+import org.junit.rules.TestRule
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
+import org.junit.runners.model.Statement
+
+class MainDispatcherRule(
+    private val testDispatcher: TestDispatcher = StandardTestDispatcher()
+) : TestWatcher() {
+
+    override fun starting(description: Description?) {
+        Dispatchers.setMain(testDispatcher)
+    }
+
+    override fun finished(description: Description?) {
+        Dispatchers.resetMain()
+    }
+}

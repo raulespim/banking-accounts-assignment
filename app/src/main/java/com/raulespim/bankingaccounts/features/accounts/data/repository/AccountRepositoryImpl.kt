@@ -47,14 +47,6 @@ class AccountRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun setFavoriteAccount(accountId: String?) {
-        if (accountId == null) {
-            dao.clearFavorite()
-        } else {
-            dao.setFavorite(accountId)
-        }
-    }
-
     override fun getFavoriteAccountOffline(): Flow<Account?> =
         dao.getFavoriteAccount().map { it?.toAccount() }
 

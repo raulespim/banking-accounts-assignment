@@ -32,7 +32,7 @@ class AccountsViewModel @Inject constructor(
 
     init {
         observeAccounts()
-        refreshAccounts(silent = false)
+        refreshAccounts(silent = true)
     }
 
     private fun observeAccounts() {
