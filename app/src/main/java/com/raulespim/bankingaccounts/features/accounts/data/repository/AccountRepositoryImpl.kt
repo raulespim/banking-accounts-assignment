@@ -12,6 +12,7 @@ import com.raulespim.bankingaccounts.features.accounts.domain.repository.Account
 import com.raulespim.bankingaccounts.features.accounts.domain.repository.PagedTransactions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,10 +31,19 @@ class AccountRepositoryImpl @Inject constructor(
     override suspend fun refreshAccounts() {
         try {
             val remoteAccounts = api.getAccounts()
-            dao.clearAll()
-            dao.upsertAll(remoteAccounts.map { it.toAccountEntity() })
+
+            val currentLocal = dao.getAllAccountsOrdered().first()
+
+            val updatedEntities = remoteAccounts.map { remoteDto ->
+                val existing = currentLocal.find { it.id == remoteDto.id }
+                remoteDto.toAccountEntity().copy(
+                    isFavorite = existing?.isFavorite ?: false
+                )
+            }
+
+            dao.upsertAll(updatedEntities)
         } catch (e: Exception) {
-            throw e
+            e.printStackTrace()
         }
     }
 
