@@ -16,10 +16,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.Instant
 import java.time.LocalDate
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -55,16 +54,22 @@ class AccountDetailsViewModel @Inject constructor(
     private var currentPage = 0
     private var fromDate: String? = null
     private var toDate: String? = null
-    private var currentFavoriteId: String? = null
 
     init {
-        observeFavorite()
+        observeFavoriteStatus()
         loadEverything(refresh = true)
     }
 
-    private fun observeFavorite() {
+    private fun observeFavoriteStatus() {
         getFavoriteOfflineUseCase()
-            .onEach { currentFavoriteId = it?.id }
+            .onEach { favoriteAccount ->
+                val isFavorite = favoriteAccount?.id == accountId
+                _uiState.update { current ->
+                    if (current is DetailsUiState.Success) {
+                        current.copy(account = current.account.copy(isFavorite = isFavorite))
+                    } else current
+                }
+            }
             .launchIn(viewModelScope)
     }
 
@@ -89,10 +94,14 @@ class AccountDetailsViewModel @Inject constructor(
                     productName = dto.product_name,
                     openedDate = dto.opened_date,
                     branch = dto.branch,
-                    beneficiaries = dto.beneficiaries,
-                    isFavorite = currentFavoriteId == accountId
+                    beneficiaries = dto.beneficiaries
                 )
-            } ?: cachedAccount.copy(isFavorite = currentFavoriteId == accountId)
+            } ?: cachedAccount
+
+            val currentFavoriteId = getFavoriteOfflineUseCase().first()?.id
+            val accountWithFavorite = enrichedAccount.copy(
+                isFavorite = enrichedAccount.id == currentFavoriteId
+            )
 
             val txResult = getTransactionsPageUseCase(accountId, currentPage, fromDate, toDate)
 
@@ -108,7 +117,7 @@ class AccountDetailsViewModel @Inject constructor(
             val hasMore = txResult.getOrNull()?.let { it.currentPage < it.totalPages } ?: false
 
             _uiState.value = DetailsUiState.Success(
-                account = enrichedAccount,
+                account = accountWithFavorite,
                 sections = grouped,
                 hasMore = hasMore,
                 isFiltering = fromDate != null || toDate != null
@@ -132,7 +141,7 @@ class AccountDetailsViewModel @Inject constructor(
 
     fun toggleFavorite() {
         viewModelScope.launch {
-            toggleFavoriteUseCase(accountId, currentFavoriteId)
+            toggleFavoriteUseCase(accountId, getFavoriteOfflineUseCase().first()?.id)
         }
     }
 
